@@ -21,9 +21,9 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
   margin: 8px;
   gap: 2rem;
   
-  background-color: ${propriedades => propriedades.theme.botaozim};
-  color: ${propiedades => propiedades.theme.primary};
-  
+  background-color: ${props => props.theme["greenClarim-100"]};
+  color: ${propiedades => propiedades.theme["gray-400"]};
+ 
   /* ${props => {
     return css`
       background-color: ${buttonVariants[props.variant]}
