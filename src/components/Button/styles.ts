@@ -7,18 +7,26 @@ interface ButtonContainerProps {
 }
 
 const buttonVariants = {
-  primary: 'purple',
+  primary: 'pink',
   secondary: 'orange',
-  danger: 'red',
-  success: 'green'
+  danger: 'yellow',
+  success: 'gray'
 }
 
 export const ButtonContainer = styled.button<ButtonContainerProps>`
   width: 100px;
   height: 40px;
-  ${props => {
+  border-radius: 4px;
+  border: 0;
+  margin: 8px;
+  gap: 2rem;
+  
+  background-color: ${propriedades => propriedades.theme.botaozim};
+  color: ${propiedades => propiedades.theme.primary};
+  
+  /* ${props => {
     return css`
       background-color: ${buttonVariants[props.variant]}
     `
-  }}
+  }} */
 `;
