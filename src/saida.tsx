@@ -4,7 +4,6 @@ import { Router } from './Router'
 
 import { GlobalStyle } from './styles/global'
 import { defaultTheme } from './styles/theme/defalt'
-import UseEffectstoma from './pages/UseEffectstoma'
 
 export function Saida() {
   return (
@@ -12,7 +11,7 @@ export function Saida() {
       <BrowserRouter>
         <Router />
       </BrowserRouter>
-      <UseEffectstoma />
+
       <GlobalStyle />
     </ThemeProvider>
   )
