@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import { useState } from 'react'
 
 import {
   CountdownContainer,
@@ -23,14 +24,22 @@ const newCycleFormValidationSchema = zod.object({
     .max(60, 'O ciclo precisa ser de no máximo 60 minutos.'),
 })
 
-interface NewCycleFormData {
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+
+interface Cycle {
+  id: string
   task: string
   minutesAmount: number
 }
 
 // controlled / uncontrolled
 export function Home() {
-  const { register, handleSubmit, watch } = useForm({
+  // armazena um array de ciclos
+  const [cycles, setCycles] = useState<Cycle[]>([])
+  // O id do ciclo ativo pode ser null.. é o valor inicial
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null)
+
+  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
       task: '',
@@ -39,8 +48,25 @@ export function Home() {
   })
 
   function handleCreateNewCycle(data: NewCycleFormData) {
-    console.log(data)
+    // Retorna a data atual convertida em milesegundos. Não vai ter ids repetidos
+    const id = String(new Date().getTime())
+
+    const newCycle: Cycle = {
+      id,
+      task: data.task,
+      minutesAmount: data.minutesAmount,
+    }
+    // Pega o estado atual da minha variavel de ciclo, copio o estado atual e adiciono o novo ciclo no final
+    setCycles((state) => [...state, newCycle])
+    setActiveCycleId(id)
+    reset()
   }
+  // Com base no id do ciclo ativo,percorrer todos os ciclos e retorna o mesmo id do ciclo ativo
+  // find = encontrar
+  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+
+  console.log(activeCycle)
+
   const task = watch('task')
   const isSubmitDisable = !task
 
